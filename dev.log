@@ -1,0 +1,8 @@
+## 2018-06-02 
+
+项目之间有引用依赖，admin-server依赖底层框架souljs,需要实现```const Soul  = require('souljs')```, 但由于不能
+将souljs发到npm仓库，也没有私有npm仓库，再者如果修改了souljs，admin-server就需要更新souljs也很繁琐。
+
+npm在安装模块时，如果发现在全局下已安装了该模块，就会在当前项目下创建个快捷方式指向已安装的模块，而不会再次下载安装。
+
+在admin-server的node-modules创建快捷方式，``` mklink /J souljs D:\workpace\souljs ```, 注意参数/j和/D.

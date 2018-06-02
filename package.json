@@ -1,0 +1,25 @@
+{
+  "name": "admin-server",
+  "version": "1.0.0",
+  "description": "admin-server",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/my-soul/admin-server.git"
+  },
+  "keywords": [
+    "admin-server"
+  ],
+  "author": "kun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/my-soul/admin-server/issues"
+  },
+  "homepage": "https://github.com/my-soul/admin-server#readme",
+  "dependencies": {
+    "souljs": "^1.0.0"
+  }
+}
