@@ -2,9 +2,8 @@
 
 const Controller = require('souljs').Controller;
 
-class MessageController extends Controller {
-  async index() {
-    const { ctx } = this;
+class MessageController {
+  async index(ctx) {
     const s = ctx.service.test.getUsersByNames();
     ctx.body = { a: s };
   }
