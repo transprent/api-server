@@ -6,6 +6,7 @@ class MessageController extends Controller{
   async index(ctx) {
     const s = this.service.test.getUsersByNames();
     s();
+    console.log('ok');
     ctx.ok('操作成功！');
   }
 }
