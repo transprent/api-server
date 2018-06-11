@@ -4,6 +4,8 @@
   "description": "admin-server",
   "main": "index.js",
   "scripts": {
+    "start": "set DEBUG=* && node src/app.js",
+    "lint": "eslint src *.js",
     "test": "test"
   },
   "repository": {
@@ -20,6 +22,16 @@
   },
   "homepage": "https://github.com/my-soul/admin-server#readme",
   "dependencies": {
-    "souljs": "^1.0.0"
+    "debug": "^3.1.0",
+    "koa": "^2.5.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-helmet": "^4.0.0",
+    "koa-router": "^7.4.0",
+    "log4js": "^2.8.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0"
   }
 }
