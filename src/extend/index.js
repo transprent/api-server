@@ -26,7 +26,7 @@ function loadExtend(name, proto) {
   }
 }
 
-module.exports = function (app) {
+module.exports = (app) => {
   loadExtend('context', app.context);
 
   return app;

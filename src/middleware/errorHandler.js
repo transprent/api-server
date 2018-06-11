@@ -4,8 +4,8 @@
  *
  * @return {function} Koa middleware.
  */
-module.exports = function () {
-  return async function errorHandler(ctx, next) {
+module.exports = () => {
+  return async (ctx, next) => {
     try {
       await next();
     } catch (err) {

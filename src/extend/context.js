@@ -5,7 +5,7 @@ const target = Object.create(null);
  * @param {*} param
  * @context {this} - koa.ctx
  */
-target.respond = function _({ code, message, result }) {
+target.respond = ({ code, message, result }) => {
   this.response.status = code;
   this.response.body = { code, message, result };
 };
@@ -20,7 +20,7 @@ const statusCodeMap = {
   internalServerError: 500,
 };
 Object.keys(statusCodeMap).forEach((method) => {
-  target[method] = function _(...args) {
+  target[method] = (...args) => {
     const code = statusCodeMap[method];
 
     if (typeof args[0] === 'string') {

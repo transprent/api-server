@@ -40,6 +40,6 @@ log4js.configure({
 
 // trace debug info warn error fatal
 
-exports.getLogger = function getLogger(category) {
+exports.getLogger = (category) => {
   return log4js.getLogger(category || 'default');
 };

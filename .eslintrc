@@ -19,6 +19,7 @@
     "no-continue": "off",
     "max-len": "off",
     "no-debugger": "off",
-    "func-names": "off"
+    "func-names": "off",
+    "arrow-body-style": "off"
   }
 }
