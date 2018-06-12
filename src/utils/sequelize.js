@@ -8,7 +8,7 @@ const sequelize = new Sequelize(Config.db.database, Config.db.username, Config.d
   dialect: 'mysql',
   operatorsAliases: false,
   logging: (...args) => {
-    logger.info(...args);
+    logger.info(args[0]);
   },
 
   pool: {
@@ -22,7 +22,7 @@ const sequelize = new Sequelize(Config.db.database, Config.db.username, Config.d
 sequelize
   .authenticate()
   .then(() => {
-    logger.debug('Connection has been established successfully.');
+    logger.info('Connection has been established successfully.');
   })
   .catch((err) => {
     logger.error('Unable to connect to the database: ', err);
