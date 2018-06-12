@@ -18,7 +18,7 @@ log4js.configure({
       filename: 'logs/http/',
       pattern: 'yyyy-MM-dd.log',
       maxLogSize: 10458760,
-      backups: 3,
+      backups: 30,
       alwaysIncludePattern: true,
     },
     default: {
@@ -26,8 +26,7 @@ log4js.configure({
       filename: 'logs/default/',
       pattern: 'yyyy-MM-dd.log',
       maxLogSize: 10458760,
-      backups: 3,
-      category: 'hahah',
+      backups: 30,
       alwaysIncludePattern: true,
     },
   },
