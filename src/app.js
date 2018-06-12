@@ -4,6 +4,7 @@ const Bodyparser = require('koa-bodyparser');
 const Middleware = require('./middleware');
 const Config = require('./config');
 
+const logger = require('./utils/log4js').getLogger(__filename);
 const router = require('./router');
 
 const app = require('./extend')(new Koa()); // extend koa
@@ -22,4 +23,6 @@ app.use(Middleware.errorHandler()); // global error handling
 
 router.useRouter(app); // mount the routing
 
-app.listen(Config.server.port);
+app.listen(Config.server.port, () => {
+  logger.info('server start at', Config.server.port);
+});

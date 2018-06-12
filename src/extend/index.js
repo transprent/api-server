@@ -1,12 +1,12 @@
 const Path = require('path');
 const ModuleUtil = require('../utils/moduleUtil');
 
-const debug = require('debug')('extend/index');
+const logger = require('../utils/log4js').getLogger(__filename);
 
 function loadExtend(name, proto) {
   const ext = ModuleUtil.resolveModule(Path.join(__dirname, name));
 
-  if (!ext) debug('extend %s not not found', name);
+  if (!ext) logger.warn('extend %s not not found', name);
 
   const properties = Object.getOwnPropertyNames(ext)
     .concat(Object.getOwnPropertySymbols(ext));
@@ -16,7 +16,7 @@ function loadExtend(name, proto) {
     const protoDescriptor = Object.getOwnPropertyDescriptor(proto, property);
 
     if (protoDescriptor) {
-      debug('%s already exit %o', name, protoDescriptor);
+      logger.warn(name, ' already exit ', protoDescriptor);
     }
 
     if (extDescriptor) {

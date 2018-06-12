@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/my-soul/admin-server#readme",
   "dependencies": {
-    "debug": "^3.1.0",
     "koa": "^2.5.1",
     "koa-bodyparser": "^4.2.1",
     "koa-helmet": "^4.0.0",

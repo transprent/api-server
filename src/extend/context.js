@@ -5,14 +5,10 @@ const target = Object.create(null);
  * @param {*} param
  * @context {this} - koa.ctx
  */
-target.respond = ({ code, message, result }) => {
-  this.response.status = code;
-  this.response.body = { code, message, result };
-};
 const statusCodeMap = {
   ok: 200,
-  created: 201,
-  noContent: 204,
+  // created: 201,
+  // noContent: 204,
   badRequest: 400,
   unauthorized: 401,
   forbidden: 403,
@@ -20,15 +16,19 @@ const statusCodeMap = {
   internalServerError: 500,
 };
 Object.keys(statusCodeMap).forEach((method) => {
-  target[method] = (...args) => {
+  target[method] = function (...args) {
     const code = statusCodeMap[method];
+    let message = null;
+    let result = null;
 
     if (typeof args[0] === 'string') {
-      this.respond({ code, message: args[0], result: args[1] || null });
+      [message, result] = args;
     } else {
-      args[0].code = statusCodeMap[method];
-      this.respond(...args);
+      [{ message, result }] = args;
     }
+
+    this.response.status = code;
+    this.response.body = { code, message, result };
   };
 });
 

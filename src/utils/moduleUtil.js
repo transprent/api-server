@@ -1,6 +1,7 @@
 const Fs = require('fs');
 const Path = require('path');
-const debug = require('debug')('utils/moduleUtil');
+
+const logger = require('../utils/log4js').getLogger(__filename);
 
 /**
  * 加载模块
@@ -11,7 +12,7 @@ function resolveModule(path) {
   try {
     ext = require(require.resolve(path));
   } catch (error) {
-    debug('resolveModule %s, error: %O', path, error);
+    logger.error('resolveModule ', path, 'error ', error);
   }
   return ext;
 }

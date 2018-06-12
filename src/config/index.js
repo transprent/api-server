@@ -11,6 +11,7 @@ const config = {
 
   db: {
     host: 'www.renkun.vip',
+    port: 3306,
     database: 'soul',
     username: 'root',
     password: '123456',
