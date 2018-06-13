@@ -21,10 +21,10 @@ Object.keys(statusCodeMap).forEach((method) => {
     let message = null;
     let result = null;
 
-    if (typeof args[0] === 'string') {
-      [message, result] = args;
+    if (args.length < 2) {
+      [result] = args;
     } else {
-      [{ message, result }] = args;
+      [message, result] = args;
     }
 
     this.response.status = code;

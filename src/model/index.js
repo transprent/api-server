@@ -12,7 +12,7 @@ exports.SysRole = sequelize.import(Path.join(__dirname, './sysRole'));
 exports.SysUser = sequelize.import(Path.join(__dirname, './sysUser'));
 
 
-exports.syncModel = ({ force }) => {
+exports.syncModel = (force) => {
   return new Promise((resolve, reject) => {
     if (Config.env !== 'dev') { reject(new Error('禁止在非Dev环境执行syncModel操作')); return; }
     logger.info('当前环境：', Config.env, ' 进行sequelize 模型同步...');

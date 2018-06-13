@@ -5,7 +5,7 @@ const Middleware = require('./middleware');
 const Config = require('./config');
 const Model = require('./model');
 
-const logger = require('./utils/log4js').getLogger(__filename);
+const logger = require('./utils/log4js').getLogger('app.js');
 const router = require('./router');
 
 const app = require('./extend')(new Koa()); // extend koa
