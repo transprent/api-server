@@ -21,6 +21,7 @@
     "no-debugger": "off",
     "func-names": "off",
     "arrow-body-style": "off",
-    "no-nested-ternary": "off"
+    "no-nested-ternary": "off",
+    "object-curly-newline": "off"
   }
 }
