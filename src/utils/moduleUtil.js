@@ -1,7 +1,7 @@
 const Fs = require('fs');
 const Path = require('path');
 
-const logger = require('../utils/log4js').getLogger(__filename);
+const logger = require('../utils/log4js').getLogger('utils/moduleUtil');
 
 /**
  * 加载模块

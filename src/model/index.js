@@ -1,7 +1,7 @@
 const Path = require('path');
 const Config = require('../config');
 const sequelize = require('../utils/sequelize');
-const logger = require('../utils/log4js').getLogger(__filename);
+const logger = require('../utils/log4js').getLogger('model/index');
 
 exports.Test = sequelize.import(Path.join(__dirname, './test'));
 

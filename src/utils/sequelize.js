@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const Config = require('../config');
 
-const logger = require('../utils/log4js').getLogger(__filename);
+const logger = require('../utils/log4js').getLogger('utlis/sequelize');
 
 const sequelize = new Sequelize(Config.db.database, Config.db.username, Config.db.password, {
   host: Config.db.host,
