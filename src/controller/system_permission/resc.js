@@ -1,18 +1,30 @@
 /**
  * 接口资源
  */
-const Model = require('../../model');
+// const Model = require('../../model');
+const Joi = require('joi');
 
-exports.g_page = async (ctx) => {
-  const d = await Model.SysResc.findAll();
-  ctx.ok(d);
-};
-
-exports = [
+module.exports = [
   {
+    comment: '获取数据！',
     type: 'get',
-    path: 'add_add',
-    schema: {},
-    action() {},
+    path: 'test',
+    param: Joi.object().keys({
+      id: Joi.string().min(3).max(30).required(),
+    }),
+    handle: async (ctx) => {
+      ctx.ok();
+    },
+  },
+  {
+    comment: '获取数据！',
+    type: 'get',
+    path: 'test2',
+    param: Joi.object().keys({
+      id: Joi.string().min(3).max(30).required(),
+    }),
+    handle: async (ctx) => {
+      ctx.ok();
+    },
   },
 ];

@@ -1,6 +1,8 @@
+const Path = require('path');
 const Koa = require('koa');
 const Helmet = require('koa-helmet');
 const Bodyparser = require('koa-bodyparser');
+const koaStatic = require('koa-static');
 const Middleware = require('./middleware');
 const Config = require('./config');
 const Model = require('./model');
@@ -9,6 +11,8 @@ const logger = require('./utils/log4js').getLogger('app.js');
 const router = require('./router');
 
 const app = require('./extend')(new Koa()); // extend koa
+
+app.use(koaStatic(Path.join(__dirname, 'public')));
 
 app.use(Helmet()); //  provides important security headers to make app more secure by default
 
