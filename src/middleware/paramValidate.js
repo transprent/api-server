@@ -11,7 +11,7 @@ module.exports = (schema) => {
   return async (ctx, next) => {
     if (!schema) { next(); return; }
     const result = Joi.validate(ctx.request.method.toLowerCase() === 'get'
-      ? ctx.query : ctx.body, schema);
+      ? ctx.query : ctx.request.body, schema);
     if (result.error === null) {
       next();
     } else {

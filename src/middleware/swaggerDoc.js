@@ -17,7 +17,7 @@ function generateApi() {
     // schemes: ['http'],
     //  will be prefixed to all paths
     basePath: '',
-    consumes: ['application/x-www-form-urlencoded'],
+    consumes: ['application/json', 'application/x-www-form-urlencoded'],
     produces: ['application/json'],
     paths: {},
     tags: [],
@@ -41,16 +41,28 @@ function generateApi() {
 
       if (item.param) {
         const param = convert(item.param);
-        Object.keys(param.properties).forEach((key) => {
-          const cont = param.properties[key];
-          obj.parameters.push({
-            name: key,
-            in: method === 'get' ? 'query' : 'body',
-            type: cont.type,
-            required: param.required.find(i => i === key),
-            description: key,
+        if (method === 'get') {
+          Object.keys(param.properties).forEach((key) => {
+            const cont = param.properties[key];
+            obj.parameters.push({
+              name: key,
+              in: 'query',
+              type: cont.type,
+              required: param.required.find(i => i === key),
+              description: key,
+            });
           });
-        });
+        } else {
+          obj.parameters.push({
+            description: 'body',
+            required: true,
+            name: 'body',
+            in: 'body',
+            schema: {
+              properties: param.properties,
+            },
+          });
+        }
       }
 
       if (!api.tags.find(i => i.name === tags)) {
