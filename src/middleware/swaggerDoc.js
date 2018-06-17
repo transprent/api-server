@@ -1,6 +1,7 @@
 const Path = require('path');
 const convert = require('joi-to-json-schema');
 const ModuleUtils = require('../utils/moduleUtil');
+const { API_CATG } = require('../utils/constant');
 
 
 function generateApi() {
@@ -68,7 +69,7 @@ function generateApi() {
       if (!api.tags.find(i => i.name === tags)) {
         api.tags.push({
           name: tags,
-          description: '',
+          description: API_CATG[tags],
         });
       }
 
@@ -90,7 +91,7 @@ module.exports = (options) => {
     if (ctx.path === options.path) {
       ctx.body = generateApi();
     } else {
-      next();
+      await next();
     }
   };
 };

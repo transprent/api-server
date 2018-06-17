@@ -1,59 +1,57 @@
 /**
- * 接口资源
+ * 角色资源
  */
 const Model = require('../../model');
 const Joi = require('joi');
 
 module.exports = [
   {
-    comment: '新增资源',
+    comment: '新增角色',
     type: 'post',
     path: 'add',
     param: Joi.object().keys({
-      catg: Joi.string().required(),
-      url: Joi.string().required(),
+      name: Joi.string().required(),
       usable: Joi.boolean().required(),
       desc: Joi.string().required(),
     }),
     handle: async (ctx) => {
-      await Model.SysResc.create(ctx.param);
+      await Model.SysRole.create(ctx.param);
       ctx.ok();
     },
   },
   {
-    comment: '修改资源',
+    comment: '修改角色',
     type: 'post',
     path: 'update',
     param: Joi.object().keys({
-      id: Joi.number().required(),
-      catg: Joi.string().required(),
-      url: Joi.string().required(),
+      id: Joi.string().required(),
+      name: Joi.string().required(),
       usable: Joi.boolean().required(),
       desc: Joi.string().required(),
     }),
     handle: async (ctx) => {
-      Model.SysResc.update(ctx.param, { where: { id: ctx.param.id } });
+      Model.SysRole.update(ctx.param, { where: { id: ctx.param.id } });
       ctx.ok();
     },
   },
   {
-    comment: '删除资源',
+    comment: '删除角色',
     type: 'get',
     path: 'delete',
     param: Joi.object().keys({
-      id: Joi.number().required(),
+      id: Joi.string().required(),
     }),
     handle: async (ctx) => {
-      await Model.SysResc.destroy({ where: { id: ctx.param.id } });
+      await Model.SysRole.destroy({ where: { id: ctx.param.id } });
       ctx.ok();
     },
   },
   {
-    comment: '获取资源',
+    comment: '获取角色',
     type: 'get',
     path: 'list',
     handle: async (ctx) => {
-      const data = await Model.SysResc.findAll();
+      const data = await Model.SysRole.findAll();
       ctx.ok(data);
     },
   },

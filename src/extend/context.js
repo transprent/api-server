@@ -32,4 +32,15 @@ Object.keys(statusCodeMap).forEach((method) => {
   };
 });
 
+/**
+ * 自动参数获取
+ */
+Object.defineProperty(target, 'param', {
+  enumerable: false,
+  configurable: false,
+  get() {
+    return this.request.method.toLowerCase() === 'get' ? this.request.query : this.request.body;
+  },
+});
+
 module.exports = target;

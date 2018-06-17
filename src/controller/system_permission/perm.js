@@ -1,38 +1,40 @@
 /**
- * 接口资源
+ * 权限资源
  */
 const Model = require('../../model');
 const Joi = require('joi');
 
 module.exports = [
   {
-    comment: '新增资源',
+    comment: '新增权限',
     type: 'post',
     path: 'add',
     param: Joi.object().keys({
-      catg: Joi.string().required(),
-      url: Joi.string().required(),
+      code: Joi.string().required(),
+      type: Joi.string().required(),
       usable: Joi.boolean().required(),
       desc: Joi.string().required(),
+      parentId: Joi.number(),
     }),
     handle: async (ctx) => {
-      await Model.SysResc.create(ctx.param);
+      await Model.SysPerm.create(ctx.param);
       ctx.ok();
     },
   },
   {
-    comment: '修改资源',
+    comment: '修改权限',
     type: 'post',
     path: 'update',
     param: Joi.object().keys({
       id: Joi.number().required(),
-      catg: Joi.string().required(),
-      url: Joi.string().required(),
+      code: Joi.string().required(),
+      type: Joi.string().required(),
       usable: Joi.boolean().required(),
       desc: Joi.string().required(),
+      parentId: Joi.number(),
     }),
     handle: async (ctx) => {
-      Model.SysResc.update(ctx.param, { where: { id: ctx.param.id } });
+      Model.SysPerm.update(ctx.param, { where: { id: ctx.param.id } });
       ctx.ok();
     },
   },
@@ -44,7 +46,7 @@ module.exports = [
       id: Joi.number().required(),
     }),
     handle: async (ctx) => {
-      await Model.SysResc.destroy({ where: { id: ctx.param.id } });
+      await Model.SysPerm.destroy({ where: { id: ctx.param.id } });
       ctx.ok();
     },
   },
@@ -53,7 +55,7 @@ module.exports = [
     type: 'get',
     path: 'list',
     handle: async (ctx) => {
-      const data = await Model.SysResc.findAll();
+      const data = await Model.SysPerm.findAll();
       ctx.ok(data);
     },
   },
