@@ -6,7 +6,7 @@ const Joi = require('joi');
 
 module.exports = [
   {
-    comment: '新增权限',
+    comment: '权限-新增权限',
     type: 'post',
     path: 'add',
     param: Joi.object().keys({
@@ -22,7 +22,7 @@ module.exports = [
     },
   },
   {
-    comment: '修改权限',
+    comment: '权限-修改权限',
     type: 'post',
     path: 'update',
     param: Joi.object().keys({
@@ -39,7 +39,7 @@ module.exports = [
     },
   },
   {
-    comment: '删除资源',
+    comment: '权限-删除权限',
     type: 'get',
     path: 'delete',
     param: Joi.object().keys({
@@ -51,7 +51,7 @@ module.exports = [
     },
   },
   {
-    comment: '获取资源',
+    comment: '权限-获取权限',
     type: 'get',
     path: 'list',
     handle: async (ctx) => {

@@ -6,7 +6,7 @@ const Joi = require('joi');
 
 module.exports = [
   {
-    comment: '新增角色',
+    comment: '角色-新增角色',
     type: 'post',
     path: 'add',
     param: Joi.object().keys({
@@ -20,7 +20,7 @@ module.exports = [
     },
   },
   {
-    comment: '修改角色',
+    comment: '角色-修改角色',
     type: 'post',
     path: 'update',
     param: Joi.object().keys({
@@ -35,7 +35,7 @@ module.exports = [
     },
   },
   {
-    comment: '删除角色',
+    comment: '角色-删除角色',
     type: 'get',
     path: 'delete',
     param: Joi.object().keys({
@@ -47,7 +47,7 @@ module.exports = [
     },
   },
   {
-    comment: '获取角色',
+    comment: '角色-获取角色',
     type: 'get',
     path: 'list',
     handle: async (ctx) => {
