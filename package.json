@@ -23,6 +23,7 @@
   "homepage": "https://github.com/my-soul/admin-server#readme",
   "dependencies": {
     "joi": "^13.4.0",
+    "joi-to-json-schema": "^3.3.0",
     "koa": "^2.5.1",
     "koa-bodyparser": "^4.2.1",
     "koa-helmet": "^4.0.0",

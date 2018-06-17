@@ -26,6 +26,8 @@ app.use(Bodyparser({
 
 app.use(Middleware.errorHandler()); // global error handling
 
+app.use(Middleware.swaggerDoc({ path: '/swagger.json' })); // swagger doc
+
 router.useRouter(app); // mount the routing
 
 if (Config.env === 'dev') {
