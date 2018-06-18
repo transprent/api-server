@@ -3,6 +3,7 @@ const Koa = require('koa');
 const Helmet = require('koa-helmet');
 const Bodyparser = require('koa-bodyparser');
 const koaStatic = require('koa-static');
+const cors = require('@koa/cors');
 const Middleware = require('./middleware');
 const Config = require('./config');
 const Model = require('./model');
@@ -13,6 +14,8 @@ const router = require('./router');
 const app = require('./extend')(new Koa()); // extend koa
 
 app.use(koaStatic(Path.join(__dirname, 'public')));
+
+app.use(cors());
 
 app.use(Helmet()); //  provides important security headers to make app more secure by default
 
@@ -31,7 +34,7 @@ app.use(Middleware.swaggerDoc({ path: '/swagger.json' })); // swagger doc
 router.useRouter(app); // mount the routing
 
 if (Config.env === 'dev') {
-  Model.syncModel(); // 数据库模型同步
+  Model.syncModel(true); // 数据库模型同步
 }
 
 app.listen(Config.server.port, () => {

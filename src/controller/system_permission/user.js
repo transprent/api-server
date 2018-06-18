@@ -2,6 +2,7 @@
  * 用户资源
  */
 const Model = require('../../model');
+const StringHelper = require('../../utils/stringHelper');
 const Joi = require('joi');
 
 module.exports = [
@@ -11,14 +12,14 @@ module.exports = [
     path: 'add',
     param: Joi.object().keys({
       uname: Joi.string().required(),
-      passwd: Joi.string().required(),
       realName: Joi.string().required(),
-      phone: Joi.string().required(),
-      usable: Joi.boolean().required(),
-      desc: Joi.string().required(),
+      // phone: Joi.string(),
+      usable: Joi.boolean(),
+      desc: Joi.string(),
     }),
     handle: async (ctx) => {
-      await Model.SysUser.create(ctx.param);
+      ctx.reqData.passwd = StringHelper.md5('123456');
+      await Model.SysUser.create(ctx.reqData);
       ctx.ok();
     },
   },
@@ -29,14 +30,13 @@ module.exports = [
     param: Joi.object().keys({
       id: Joi.string().required(),
       uname: Joi.string().required(),
-      passwd: Joi.string().required(),
       realName: Joi.string().required(),
       phone: Joi.string().required(),
       usable: Joi.boolean().required(),
       desc: Joi.string().required(),
     }),
     handle: async (ctx) => {
-      Model.SysUser.update(ctx.param, { where: { id: ctx.param.id } });
+      Model.SysUser.update(ctx.reqData, { where: { id: ctx.reqData.id } });
       ctx.ok();
     },
   },
@@ -48,7 +48,7 @@ module.exports = [
       id: Joi.string().required(),
     }),
     handle: async (ctx) => {
-      await Model.SysUser.destroy({ where: { id: ctx.param.id } });
+      await Model.SysUser.destroy({ where: { id: ctx.reqData.id } });
       ctx.ok();
     },
   },

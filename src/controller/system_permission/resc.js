@@ -16,7 +16,7 @@ module.exports = [
       desc: Joi.string().required(),
     }),
     handle: async (ctx) => {
-      await Model.SysResc.create(ctx.param);
+      await Model.SysResc.create(ctx.reqData);
       ctx.ok();
     },
   },
@@ -32,7 +32,7 @@ module.exports = [
       desc: Joi.string().required(),
     }),
     handle: async (ctx) => {
-      Model.SysResc.update(ctx.param, { where: { id: ctx.param.id } });
+      Model.SysResc.update(ctx.reqData, { where: { id: ctx.reqData.id } });
       ctx.ok();
     },
   },
@@ -44,7 +44,7 @@ module.exports = [
       id: Joi.number().required(),
     }),
     handle: async (ctx) => {
-      await Model.SysResc.destroy({ where: { id: ctx.param.id } });
+      await Model.SysResc.destroy({ where: { id: ctx.reqData.id } });
       ctx.ok();
     },
   },

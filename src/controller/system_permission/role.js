@@ -15,7 +15,7 @@ module.exports = [
       desc: Joi.string().required(),
     }),
     handle: async (ctx) => {
-      await Model.SysRole.create(ctx.param);
+      await Model.SysRole.create(ctx.reqData);
       ctx.ok();
     },
   },
@@ -30,7 +30,7 @@ module.exports = [
       desc: Joi.string().required(),
     }),
     handle: async (ctx) => {
-      Model.SysRole.update(ctx.param, { where: { id: ctx.param.id } });
+      Model.SysRole.update(ctx.reqData, { where: { id: ctx.reqData.id } });
       ctx.ok();
     },
   },
@@ -42,7 +42,7 @@ module.exports = [
       id: Joi.string().required(),
     }),
     handle: async (ctx) => {
-      await Model.SysRole.destroy({ where: { id: ctx.param.id } });
+      await Model.SysRole.destroy({ where: { id: ctx.reqData.id } });
       ctx.ok();
     },
   },
