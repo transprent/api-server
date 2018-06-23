@@ -3,9 +3,9 @@ module.exports = (sequelize, DataTypes) => {
     'sysPerm',
     {
       id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, autoIncrement: true },
+      name: { type: DataTypes.STRING, allowNull: false },
       code: { type: DataTypes.STRING, allowNull: false },
-      type: { type: DataTypes.STRING, allowNull: false },
-      desc: { type: DataTypes.STRING, allowNull: false },
+      desc: { type: DataTypes.STRING, allowNull: true },
       usable: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
       parentId: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0, field: 'parent_id', comment: '父级权限' },
     },

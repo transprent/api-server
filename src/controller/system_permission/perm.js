@@ -10,10 +10,9 @@ module.exports = [
     type: 'post',
     path: 'add',
     param: Joi.object().keys({
+      name: Joi.string().required(),
       code: Joi.string().required(),
-      type: Joi.string().required(),
-      usable: Joi.boolean().required(),
-      desc: Joi.string().required(),
+      desc: Joi.string(),
       parentId: Joi.number(),
     }),
     handle: async (ctx) => {
@@ -27,10 +26,9 @@ module.exports = [
     path: 'update',
     param: Joi.object().keys({
       id: Joi.number().required(),
+      name: Joi.string().required(),
       code: Joi.string().required(),
-      type: Joi.string().required(),
-      usable: Joi.boolean().required(),
-      desc: Joi.string().required(),
+      usable: Joi.boolean(),
       parentId: Joi.number(),
     }),
     handle: async (ctx) => {
@@ -56,6 +54,12 @@ module.exports = [
     path: 'list',
     handle: async (ctx) => {
       const data = await Model.SysPerm.findAll();
+      data.push({
+        parentId: -1,
+        id: 0,
+        name: '权限管理',
+        code: 'f_perm',
+      });
       ctx.ok(data);
     },
   },

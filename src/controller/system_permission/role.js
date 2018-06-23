@@ -11,8 +11,7 @@ module.exports = [
     path: 'add',
     param: Joi.object().keys({
       name: Joi.string().required(),
-      usable: Joi.boolean().required(),
-      desc: Joi.string().required(),
+      desc: Joi.string(),
     }),
     handle: async (ctx) => {
       await Model.SysRole.create(ctx.reqData);
@@ -27,7 +26,7 @@ module.exports = [
       id: Joi.string().required(),
       name: Joi.string().required(),
       usable: Joi.boolean().required(),
-      desc: Joi.string().required(),
+      desc: Joi.string(),
     }),
     handle: async (ctx) => {
       Model.SysRole.update(ctx.reqData, { where: { id: ctx.reqData.id } });
