@@ -6,10 +6,13 @@ const logger = require('../utils/log4js').getLogger('model/index');
 exports.Test = sequelize.import(Path.join(__dirname, './test'));
 
 // 系统权限管理
-exports.SysPerm = sequelize.import(Path.join(__dirname, './sysPerm'));
-exports.SysResc = sequelize.import(Path.join(__dirname, './sysResc'));
-exports.SysRole = sequelize.import(Path.join(__dirname, './sysRole'));
-exports.SysUser = sequelize.import(Path.join(__dirname, './sysUser'));
+exports.sys_perm = sequelize.import(Path.join(__dirname, './sys_perm')); // 权限表
+exports.sys_resc = sequelize.import(Path.join(__dirname, './sys_resc')); // 资源表
+exports.sys_role = sequelize.import(Path.join(__dirname, './sys_role')); // 角色表
+exports.sys_user = sequelize.import(Path.join(__dirname, './sys_user')); // 用户表
+exports.sys_fk_perm_resc = sequelize.import(Path.join(__dirname, './sys_fk_perm_resc')); // 权限资源关联表
+exports.sys_fk_role_perm = sequelize.import(Path.join(__dirname, './sys_fk_role_perm')); // 角色权限关联表
+exports.sys_fk_user_role = sequelize.import(Path.join(__dirname, './sys_fk_user_role')); // 用户角色关联表
 
 
 exports.syncModel = (force) => {

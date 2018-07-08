@@ -4,6 +4,7 @@
 const Model = require('../../model');
 const StringHelper = require('../../utils/stringHelper');
 const Joi = require('joi');
+const Service = require('../../service');
 
 module.exports = [
   {
@@ -13,13 +14,13 @@ module.exports = [
     param: Joi.object().keys({
       uname: Joi.string().required(),
       realName: Joi.string().required(),
-      // phone: Joi.string(),
+      phone: Joi.string(),
       usable: Joi.boolean(),
       desc: Joi.string(),
     }),
     handle: async (ctx) => {
       ctx.reqData.passwd = StringHelper.md5('123456');
-      await Model.SysUser.create(ctx.reqData);
+      await Model.sys_user.create(ctx.reqData);
       ctx.ok();
     },
   },
@@ -36,7 +37,7 @@ module.exports = [
       desc: Joi.string().required(),
     }),
     handle: async (ctx) => {
-      Model.SysUser.update(ctx.reqData, { where: { id: ctx.reqData.id } });
+      Model.sys_user.update(ctx.reqData, { where: { id: ctx.reqData.id } });
       ctx.ok();
     },
   },
@@ -48,7 +49,7 @@ module.exports = [
       id: Joi.string().required(),
     }),
     handle: async (ctx) => {
-      await Model.SysUser.destroy({ where: { id: ctx.reqData.id } });
+      await Model.sys_user.destroy({ where: { id: ctx.reqData.id } });
       ctx.ok();
     },
   },
@@ -57,8 +58,21 @@ module.exports = [
     type: 'get',
     path: 'list',
     handle: async (ctx) => {
-      const data = await Model.SysUser.findAll();
+      const data = await Model.sys_user.queryList();
       ctx.ok(data);
+    },
+  },
+  {
+    comment: '用户-分配角色',
+    type: 'post',
+    path: 'allocation_role',
+    param: Joi.object().keys({
+      userId: Joi.any().required(),
+      roleIds: Joi.array().required(),
+    }),
+    handle: async (ctx) => {
+      const res = await Service.permission.allocationRole(ctx.reqData);
+      ctx.answer(res);
     },
   },
 ];

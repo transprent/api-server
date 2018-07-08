@@ -16,7 +16,7 @@ module.exports = [
       parentId: Joi.number(),
     }),
     handle: async (ctx) => {
-      await Model.SysPerm.create(ctx.reqData);
+      await Model.sys_perm.create(ctx.reqData);
       ctx.ok();
     },
   },
@@ -32,7 +32,7 @@ module.exports = [
       parentId: Joi.number(),
     }),
     handle: async (ctx) => {
-      Model.SysPerm.update(ctx.reqData, { where: { id: ctx.reqData.id } });
+      Model.sys_perm.update(ctx.reqData, { where: { id: ctx.reqData.id } });
       ctx.ok();
     },
   },
@@ -44,7 +44,7 @@ module.exports = [
       id: Joi.number().required(),
     }),
     handle: async (ctx) => {
-      await Model.SysPerm.destroy({ where: { id: ctx.reqData.id } });
+      await Model.sys_perm.destroy({ where: { id: ctx.reqData.id } });
       ctx.ok();
     },
   },
@@ -53,7 +53,7 @@ module.exports = [
     type: 'get',
     path: 'list',
     handle: async (ctx) => {
-      const data = await Model.SysPerm.findAll();
+      const data = await Model.sys_perm.findAll();
       data.push({
         parentId: -1,
         id: 0,

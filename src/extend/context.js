@@ -15,6 +15,10 @@ const statusCodeMap = {
   notFound: 404,
   internalServerError: 500,
 };
+target.answer = function (res) {
+  this.response.status = res.code;
+  this.response.body = res;
+};
 Object.keys(statusCodeMap).forEach((method) => {
   target[method] = function (...args) {
     const code = statusCodeMap[method];
@@ -27,8 +31,7 @@ Object.keys(statusCodeMap).forEach((method) => {
       [message, result] = args;
     }
 
-    this.response.status = code;
-    this.response.body = { code, message, result };
+    this.answer({ code, message, result });
   };
 });
 

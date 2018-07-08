@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.define(
-    'sysUser',
+    'sys_user',
     {
       id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, autoIncrement: true },
       uname: { type: DataTypes.STRING, allowNull: false, comment: '账号' },
@@ -13,12 +13,20 @@ module.exports = (sequelize, DataTypes) => {
     {
       timestamps: false,
       tableName: 'sys_user',
-      comment: '权限角色表',
+      comment: '权限用户表',
       indexes: [
         { unique: true, fields: ['id'] },
       ],
     },
   );
+
+  Model.queryList = () => {
+    const sql =
+    'SELECT * FROM sys_user u';
+    return sequelize.query(sql, {
+      type: sequelize.QueryTypes.SELECT,
+    });
+  };
 
   return Model;
 };

@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.define(
-    'sysPerm',
+    'sys_perm',
     {
       id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, autoIncrement: true },
       name: { type: DataTypes.STRING, allowNull: false },

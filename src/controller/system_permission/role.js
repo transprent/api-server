@@ -14,7 +14,7 @@ module.exports = [
       desc: Joi.string(),
     }),
     handle: async (ctx) => {
-      await Model.SysRole.create(ctx.reqData);
+      await Model.sys_role.create(ctx.reqData);
       ctx.ok();
     },
   },
@@ -29,7 +29,7 @@ module.exports = [
       desc: Joi.string(),
     }),
     handle: async (ctx) => {
-      Model.SysRole.update(ctx.reqData, { where: { id: ctx.reqData.id } });
+      Model.sys_role.update(ctx.reqData, { where: { id: ctx.reqData.id } });
       ctx.ok();
     },
   },
@@ -41,7 +41,7 @@ module.exports = [
       id: Joi.string().required(),
     }),
     handle: async (ctx) => {
-      await Model.SysRole.destroy({ where: { id: ctx.reqData.id } });
+      await Model.sys_role.destroy({ where: { id: ctx.reqData.id } });
       ctx.ok();
     },
   },
@@ -50,7 +50,7 @@ module.exports = [
     type: 'get',
     path: 'list',
     handle: async (ctx) => {
-      const data = await Model.SysRole.findAll();
+      const data = await Model.sys_role.findAll();
       ctx.ok(data);
     },
   },

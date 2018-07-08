@@ -19,7 +19,7 @@ module.exports = [
       desc: Joi.string(),
     }),
     handle: async (ctx) => {
-      await Model.SysResc.create(ctx.reqData);
+      await Model.sys_resc.create(ctx.reqData);
       ctx.ok();
     },
   },
@@ -35,7 +35,7 @@ module.exports = [
       desc: Joi.string(),
     }),
     handle: async (ctx) => {
-      Model.SysResc.update(ctx.reqData, { where: { id: ctx.reqData.id } });
+      Model.sys_resc.update(ctx.reqData, { where: { id: ctx.reqData.id } });
       ctx.ok();
     },
   },
@@ -47,7 +47,7 @@ module.exports = [
       id: Joi.number().required(),
     }),
     handle: async (ctx) => {
-      await Model.SysResc.destroy({ where: { id: ctx.reqData.id } });
+      await Model.sys_resc.destroy({ where: { id: ctx.reqData.id } });
       ctx.ok();
     },
   },
@@ -65,7 +65,7 @@ module.exports = [
           [Op.in]: ctx.reqData.catg.split(','),
         };
       }
-      const data = await Model.SysResc.findAll({ where });
+      const data = await Model.sys_resc.findAll({ where });
       ctx.ok(data);
     },
   },
@@ -74,7 +74,7 @@ module.exports = [
     type: 'get',
     path: 'check',
     handle: async (ctx) => {
-      const dbResc = await Model.SysResc.findAll(); // 数据库里的资源
+      const dbResc = await Model.sys_resc.findAll(); // 数据库里的资源
       const codeResc = generateApi().paths; // swagger的api, 根据代码生成的
 
       const result = [];

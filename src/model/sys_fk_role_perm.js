@@ -1,16 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.define(
-    'sysRole',
+    'sys_fk_role_perm',
     {
       id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, autoIncrement: true },
-      name: { type: DataTypes.STRING, allowNull: false },
-      usable: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
-      desc: { type: DataTypes.STRING, allowNull: true },
+      role_id: { type: DataTypes.INTEGER, allowNull: false },
+      perm_id: { type: DataTypes.INTEGER, allowNull: false },
     },
     {
       timestamps: false,
-      tableName: 'sys_role',
-      comment: '权限角色表',
+      tableName: 'sys_fk_role_perm',
+      comment: '角色权限关联表',
       indexes: [
         { unique: true, fields: ['id'] },
       ],
