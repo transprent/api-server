@@ -67,8 +67,8 @@ module.exports = [
     type: 'post',
     path: 'allocation_role',
     param: Joi.object().keys({
-      userId: Joi.any().required(),
-      roleIds: Joi.array().required(),
+      userId: Joi.number().required(),
+      roleIds: Joi.array().items(Joi.number()).required(),
     }),
     handle: async (ctx) => {
       const res = await Service.permission.allocationRole(ctx.reqData);
