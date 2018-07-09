@@ -2,6 +2,7 @@
  * 角色资源
  */
 const Model = require('../../model');
+const Service = require('../../service');
 const Joi = require('joi');
 
 module.exports = [
@@ -50,8 +51,26 @@ module.exports = [
     type: 'get',
     path: 'list',
     handle: async (ctx) => {
-      const data = await Model.sys_role.findAll();
+      const data = await Model.sys_role.findAll({
+        include: [{
+          model: Model.sys_user,
+          as: 'users',
+        }],
+      });
       ctx.ok(data);
+    },
+  },
+  {
+    comment: '角色-分配权限',
+    type: 'post',
+    path: 'allocation_perm',
+    param: Joi.object().keys({
+      roleId: Joi.number().required(),
+      permIds: Joi.array().items(Joi.number()).required(),
+    }),
+    handle: async (ctx) => {
+      const res = await Service.permission.allocationPerm(ctx.reqData);
+      ctx.answer(res);
     },
   },
 ];

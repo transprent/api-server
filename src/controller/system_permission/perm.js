@@ -2,6 +2,7 @@
  * 权限资源
  */
 const Model = require('../../model');
+const Service = require('../../service');
 const Joi = require('joi');
 
 module.exports = [
@@ -53,14 +54,33 @@ module.exports = [
     type: 'get',
     path: 'list',
     handle: async (ctx) => {
-      const data = await Model.sys_perm.findAll();
+      const data = await Model.sys_perm.findAll({
+        include: [{
+          model: Model.sys_role,
+          as: 'roles',
+        }],
+      });
       data.push({
         parentId: -1,
         id: 0,
-        name: '权限管理',
+        name: '管理系统',
         code: 'f_perm',
+        roles: [],
       });
       ctx.ok(data);
+    },
+  },
+  {
+    comment: '权限-分配资源',
+    type: 'post',
+    path: 'allocation_resc',
+    param: Joi.object().keys({
+      permId: Joi.number().required(),
+      rescIds: Joi.array().items(Joi.number()).required(),
+    }),
+    handle: async (ctx) => {
+      const res = await Service.permission.allocationResc(ctx.reqData);
+      ctx.answer(res);
     },
   },
 ];
