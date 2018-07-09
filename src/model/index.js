@@ -13,7 +13,15 @@ exports.sys_user = sequelize.import(Path.join(__dirname, './sys_user')); // 用�
 exports.sys_fk_perm_resc = sequelize.import(Path.join(__dirname, './sys_fk_perm_resc')); // 权限资源关联表
 exports.sys_fk_role_perm = sequelize.import(Path.join(__dirname, './sys_fk_role_perm')); // 角色权限关联表
 exports.sys_fk_user_role = sequelize.import(Path.join(__dirname, './sys_fk_user_role')); // 用户角色关联表
-
+// 用户角色多对多关联
+exports.sys_user.belongsToMany(exports.sys_role, { as: 'roles', through: exports.sys_fk_user_role, foreignKey: 'user_id', validation: 'CASCADE', constraints: true });
+exports.sys_role.belongsToMany(exports.sys_user, { as: 'users', through: exports.sys_fk_user_role ,foreignKey: 'role_id', validation: 'CASCADE', constraints: true });
+// 角色权限多对多关联
+exports.sys_role.belongsToMany(exports.sys_perm, { as: 'perms', through: exports.sys_fk_role_perm, foreignKey: 'perm_id', validation: 'CASCADE', constraints: true });
+exports.sys_perm.belongsToMany(exports.sys_role, { as: 'roles', through: exports.sys_fk_role_perm ,foreignKey: 'role_id', validation: 'CASCADE', constraints: true });
+// 权限资源多对多关联
+exports.sys_perm.belongsToMany(exports.sys_resc, { as: 'rescs', through: exports.sys_fk_perm_resc, foreignKey: 'resc_id', validation: 'CASCADE', constraints: true });
+exports.sys_resc.belongsToMany(exports.sys_perm, { as: 'perms', through: exports.sys_fk_perm_resc ,foreignKey: 'perm_id', validation: 'CASCADE', constraints: true });
 
 exports.syncModel = (force) => {
   return new Promise((resolve, reject) => {

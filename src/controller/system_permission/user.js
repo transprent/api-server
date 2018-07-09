@@ -58,7 +58,12 @@ module.exports = [
     type: 'get',
     path: 'list',
     handle: async (ctx) => {
-      const data = await Model.sys_user.queryList();
+      const data = await Model.sys_user.findAll({
+        include: [{
+          model: Model.sys_role,
+          as: 'roles',
+        }],
+      });
       ctx.ok(data);
     },
   },

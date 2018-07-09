@@ -20,13 +20,5 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  Model.queryList = () => {
-    const sql =
-    'SELECT * FROM sys_user u';
-    return sequelize.query(sql, {
-      type: sequelize.QueryTypes.SELECT,
-    });
-  };
-
   return Model;
 };
