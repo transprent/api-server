@@ -1,3 +1,5 @@
+const Service = require('../../service');
+
 /**
  * 用户资源
  */
@@ -16,7 +18,7 @@ module.exports = [
       realName: Joi.string().required(),
       phone: Joi.string(),
       usable: Joi.boolean(),
-      desc: Joi.string(),
+      desc: Joi,
     }),
     handle: async (ctx) => {
       ctx.reqData.passwd = StringHelper.md5('123456');
@@ -78,6 +80,68 @@ module.exports = [
     handle: async (ctx) => {
       const res = await Service.permission.allocationRole(ctx.reqData);
       ctx.answer(res);
+    },
+  },
+  {
+    comment: '用户-登录',
+    type: 'post',
+    path: 'login',
+    param: Joi.object().keys({
+      uname: Joi.string().required(),
+      passwd: Joi.string().required(),
+      validateCode: Joi.any().required(),
+    }),
+    handle: async (ctx) => {
+      const captchaRes = Service.utils.captcha.valid(ctx.session, ctx.reqData.validateCode);
+      if (captchaRes.code !== 200) {
+        ctx.answer(captchaRes);
+        return;
+      } 
+      const user = await Model.sys_user.findOne({
+        where: {
+          uname: ctx.reqData.uname,
+          passwd: StringHelper.md5(ctx.reqData.passwd),
+        }
+      });
+      if (!user) {
+        ctx.badRequest('用户名或密码错误！');
+        return;
+      }
+
+      user.permList = await Service.permission.getUserPerms(user.id);
+      user.rescList = await Service.permission.getUserRescs(user.id);
+
+      ctx.session.user = user;
+      ctx.ok();
+    },
+  },
+  {
+    comment: '用户-退出',
+    type: 'get',
+    path: 'logout',
+    handle: async (ctx) => {
+      ctx.session.user = null;
+      ctx.ok();
+    },
+  },
+  {
+    comment: '用户-获取用户信息',
+    type: 'post',
+    path: 'userinfo',
+    handle: async (ctx) => {
+      if (ctx.session.user) {
+        const user = ctx.session.user;
+        const data = {
+          uanme: user.uanme,
+          realName: user.realName,
+          phone: user.phone,
+          desc: user.desc,
+          permList: user.permList,
+        };
+        ctx.ok(data);
+      } else {
+        this.unauthorized('用户未登录！');
+      }
     },
   },
 ];

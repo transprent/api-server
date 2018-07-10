@@ -1,4 +1,5 @@
 const Model = require('../model');
+const sequelize = require('../utils/sequelize');
 
 /**
  * 用户分配角色
@@ -75,3 +76,48 @@ exports.allocationResc = async ({ permId, rescIds }) => {
   return { code: 200 };
 };
 
+/**
+ * 获取用户的权限
+ * @param {*} userId
+ * @return {Array}
+ */
+exports.getUserPerms = async (userId) => {
+  const sql = `
+  SELECT
+    DISTINCT p.id, p.parent_id AS parentId, p.name, p.code, p.desc
+  FROM sys_perm AS p
+  INNER JOIN (
+    sys_fk_user_role AS ur LEFT JOIN sys_fk_role_perm AS rp ON ur.role_id = rp.role_id
+  ) ON p.id = rp.perm_id
+  WHERE ur.user_id = :userId;
+  `;
+  const data = await sequelize.query(sql, {
+    replacements: { userId },
+    type: sequelize.QueryTypes.SELECT,
+  });
+  return { code: 200, result: data };
+};
+
+/**
+ * 获取用户的资源
+ * @param {*} userId
+ * @return {Object}
+ */
+exports.getUserRescs = (userId) => {
+  const sql = `
+  SELECT
+    DISTINCT resc.id, resc.name, resc.catg, resc.url, resc.desc
+  FROM sys_resc AS resc
+  INNER JOIN (
+    sys_fk_perm_resc AS perm_resc INNER JOIN (
+      sys_fk_user_role AS user_role INNER JOIN sys_fk_role_perm AS role_perm ON user_role.role_id = role_perm.role_id
+    ) ON perm_resc.perm_id = role_perm.perm_id
+  ) ON resc.id = perm_resc.resc_id
+  WHERE user_role.user_id = :userId;
+  `;
+  const data = await sequelize.query(sql, {
+    replacements: { userId },
+    type: sequelize.QueryTypes.SELECT,
+  });
+  return { code: 200, result: data };
+};
