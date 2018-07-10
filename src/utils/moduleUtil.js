@@ -63,7 +63,8 @@ function getDirectoryModuleTree(directory) {
 
     item.properties.forEach((property, index) => {
       if (!target[property] && index !== item.properties.length - 1) {
-        target = target[property] = Object.create(null);
+        target[property] = Object.create(null);
+        target = target[property];
       } else {
         target[property] = item.exports;
       }

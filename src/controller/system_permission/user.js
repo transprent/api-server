@@ -1,8 +1,7 @@
-const Service = require('../../service');
-
 /**
  * 用户资源
  */
+
 const Model = require('../../model');
 const StringHelper = require('../../utils/stringHelper');
 const Joi = require('joi');
@@ -89,27 +88,30 @@ module.exports = [
     param: Joi.object().keys({
       uname: Joi.string().required(),
       passwd: Joi.string().required(),
-      validateCode: Joi.any().required(),
+      code: Joi.any().required(),
     }),
     handle: async (ctx) => {
-      const captchaRes = Service.utils.captcha.valid(ctx.session, ctx.reqData.validateCode);
+      const captchaRes = Service.utils.captcha.valid(ctx.session, ctx.reqData.code);
       if (captchaRes.code !== 200) {
         ctx.answer(captchaRes);
         return;
-      } 
+      }
       const user = await Model.sys_user.findOne({
         where: {
           uname: ctx.reqData.uname,
           passwd: StringHelper.md5(ctx.reqData.passwd),
-        }
+        },
       });
       if (!user) {
         ctx.badRequest('用户名或密码错误！');
         return;
       }
 
-      user.permList = await Service.permission.getUserPerms(user.id);
-      user.rescList = await Service.permission.getUserRescs(user.id);
+      const userPerms = await Service.permission.getUserPerms(user.id);
+      const userRescs = await Service.permission.getUserRescs(user.id);
+
+      user.permList = userPerms.result;
+      user.rescList = userRescs.result;
 
       ctx.session.user = user;
       ctx.ok();
@@ -126,13 +128,13 @@ module.exports = [
   },
   {
     comment: '用户-获取用户信息',
-    type: 'post',
+    type: 'get',
     path: 'userinfo',
     handle: async (ctx) => {
       if (ctx.session.user) {
-        const user = ctx.session.user;
+        const { user } = ctx.session;
         const data = {
-          uanme: user.uanme,
+          uname: user.uname,
           realName: user.realName,
           phone: user.phone,
           desc: user.desc,

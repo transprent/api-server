@@ -103,7 +103,7 @@ exports.getUserPerms = async (userId) => {
  * @param {*} userId
  * @return {Object}
  */
-exports.getUserRescs = (userId) => {
+exports.getUserRescs = async (userId) => {
   const sql = `
   SELECT
     DISTINCT resc.id, resc.name, resc.catg, resc.url, resc.desc

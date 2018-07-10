@@ -18,7 +18,9 @@ app.keys = ['mysoul:admin'];
 
 app.use(koaStatic(Path.join(__dirname, 'public')));
 
-app.use(cors());
+app.use(cors({
+  credentials: true,
+}));
 
 app.use(Helmet()); //  provides important security headers to make app more secure by default
 
