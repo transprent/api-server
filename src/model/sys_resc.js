@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       name: { type: DataTypes.STRING, allowNull: false },
       catg: { type: DataTypes.STRING, allowNull: false },
       url: { type: DataTypes.STRING, allowNull: false },
+      type: { type: DataTypes.STRING, allowNull: false, defaultValue: 'get' },
       usable: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
       desc: { type: DataTypes.STRING, allowNull: true },
     },

@@ -16,6 +16,7 @@ module.exports = [
       name: Joi.string().required(),
       catg: Joi.string().required(),
       url: Joi.string().required(),
+      type: Joi.string().required(),
       desc: Joi.string(),
     }),
     handle: async (ctx) => {
@@ -32,6 +33,7 @@ module.exports = [
       name: Joi.string().required(),
       catg: Joi.string().required(),
       url: Joi.string().required(),
+      type: Joi.string().required(),
       desc: Joi.string(),
     }),
     handle: async (ctx) => {
@@ -55,17 +57,8 @@ module.exports = [
     comment: '资源-获取资源',
     type: 'get',
     path: 'list',
-    param: Joi.object().keys({
-      catg: Joi.string().allow(''),
-    }),
     handle: async (ctx) => {
-      const where = {};
-      if (ctx.reqData.catg) {
-        where.catg = {
-          [Op.in]: ctx.reqData.catg.split(','),
-        };
-      }
-      const data = await Model.sys_resc.findAll({ where });
+      const data = await Model.sys_resc.findAll();
       ctx.ok(data);
     },
   },
@@ -80,11 +73,13 @@ module.exports = [
       const result = [];
 
       Object.keys(codeResc).forEach((path) => {
-        const rowInfo = codeResc[path].get || codeResc[path].post;
+        const type = codeResc[path].get ? 'get' : 'post';
+        const rowInfo = codeResc[path][type];
         const resc = {
           url: path,
           catg: rowInfo.tags[0],
           name: rowInfo.summary,
+          type,
         };
         const f = dbResc.find(item => item.url === path);
         if (f) {
@@ -92,19 +87,19 @@ module.exports = [
           if (resc.url === f.url && resc.name === f.name && resc.catg === f.catg) {
             // nothing
           } else {
-            resc.type = 'update';
+            resc.action = 'update';
             resc.original = f;
             result.push(resc);
           }
         } else {
           // 接口属于新增
-          resc.type = 'add';
+          resc.action = 'add';
           result.push(resc);
         }
       });
       dbResc.forEach((item) => {
         if (!codeResc[item.url]) {
-          item.type = 'remove';
+          item.action = 'remove';
           result.push(item);
         }
       });

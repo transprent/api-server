@@ -110,10 +110,14 @@ module.exports = [
       const userPerms = await Service.permission.getUserPerms(user.id);
       const userRescs = await Service.permission.getUserRescs(user.id);
 
-      user.permList = userPerms.result;
-      user.rescList = userRescs.result;
-
-      ctx.session.user = user;
+      ctx.session.user = {
+        uname: user.uname,
+        realName: user.realName,
+        phone: user.phone,
+        desc: user.desc,
+        permList: userPerms.result,
+        rescList: userRescs.result,
+      };
       ctx.ok();
     },
   },
@@ -142,7 +146,7 @@ module.exports = [
         };
         ctx.ok(data);
       } else {
-        this.unauthorized('用户未登录！');
+        ctx.unauthorized('用户未登录！');
       }
     },
   },

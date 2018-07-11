@@ -3,7 +3,6 @@ const Koa = require('koa');
 const Helmet = require('koa-helmet');
 const Bodyparser = require('koa-bodyparser');
 const koaStatic = require('koa-static');
-const session = require('koa-session');
 const cors = require('@koa/cors');
 const Middleware = require('./middleware');
 const Config = require('./config');
@@ -36,12 +35,7 @@ app.use(Middleware.errorHandler()); // global error handling
 
 app.use(Middleware.swaggerDoc({ path: '/swagger.json' })); // swagger doc
 
-app.use(session({
-  key: 'mysoul:admin',
-  maxAge: 86400000,
-  httpOnly: true,
-  signed: true, /** (boolean) signed or not (default true) */
-}, app));
+app.use(Middleware.session(app));
 
 router.useRouter(app); // mount the routing
 

@@ -121,3 +121,20 @@ exports.getUserRescs = async (userId) => {
   });
   return { code: 200, result: data };
 };
+
+/**
+ * 获取权限拥有的资源
+ * @param {*} permId
+ */
+exports.getPermOwnResc = async (permId) => {
+  const sql = `
+  SELECT r.*
+  FROM sys_fk_perm_resc pr INNER JOIN sys_resc r ON r.id = pr.resc_id
+  WHERE pr.perm_id = :permId
+  `;
+  const data = await sequelize.query(sql, {
+    replacements: { permId },
+    type: sequelize.QueryTypes.SELECT,
+  });
+  return { code: 200, result: data };
+};

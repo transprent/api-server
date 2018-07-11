@@ -83,4 +83,16 @@ module.exports = [
       ctx.answer(res);
     },
   },
+  {
+    comment: '权限-获取指定权限下的资源',
+    type: 'get',
+    path: 'own/resc',
+    param: Joi.object().keys({
+      permId: Joi.number().required(),
+    }),
+    handle: async (ctx) => {
+      const res = await Service.permission.getPermOwnResc(ctx.reqData.permId);
+      ctx.answer(res);
+    },
+  },
 ];
