@@ -1,8 +1,10 @@
 /**
  * 接口资源
+ * @author kun
+ * 2018-7-11
  */
+
 const Joi = require('joi');
-const { Op } = require('sequelize');
 
 const Model = require('../../model');
 const generateApi = require('../../utils/generateApi');
@@ -84,7 +86,7 @@ module.exports = [
         const f = dbResc.find(item => item.url === path);
         if (f) {
           // 检查是否更新
-          if (resc.url === f.url && resc.name === f.name && resc.catg === f.catg) {
+          if (resc.url === f.url && resc.name === f.name && resc.catg === f.catg && resc.type === f.type) {
             // nothing
           } else {
             resc.action = 'update';
