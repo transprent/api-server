@@ -138,3 +138,20 @@ exports.getPermOwnResc = async (permId) => {
   });
   return { code: 200, result: data };
 };
+
+/**
+ * 获取角色拥有的权限
+ * @param {*} roleId
+ */
+exports.getRoleOwnPerm = async (roleId) => {
+  const sql = `
+  SELECT p.*
+  FROM sys_fk_role_perm rp INNER JOIN sys_perm p ON p.id = rp.perm_id
+  WHERE rp.role_id = :roleId
+  `;
+  const data = await sequelize.query(sql, {
+    replacements: { roleId },
+    type: sequelize.QueryTypes.SELECT,
+  });
+  return { code: 200, result: data };
+};

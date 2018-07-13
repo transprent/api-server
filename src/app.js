@@ -40,7 +40,7 @@ app.use(Middleware.session(app));
 router.useRouter(app); // mount the routing
 
 if (Config.env === 'dev') {
-  Model.syncModel(false); // 数据库模型同步
+  Model.syncModel(true); // 数据库模型同步
 }
 
 app.listen(Config.server.port, () => {

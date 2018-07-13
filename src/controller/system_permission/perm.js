@@ -14,6 +14,7 @@ module.exports = [
       name: Joi.string().required(),
       code: Joi.string().required(),
       desc: Joi.string(),
+      sort: Joi.number(),
       parentId: Joi.number(),
     }),
     handle: async (ctx) => {
@@ -29,6 +30,7 @@ module.exports = [
       id: Joi.number().required(),
       name: Joi.string().required(),
       code: Joi.string().required(),
+      sort: Joi.number(),
       usable: Joi.boolean(),
       parentId: Joi.number(),
     }),

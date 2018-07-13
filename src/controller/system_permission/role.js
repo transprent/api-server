@@ -73,4 +73,16 @@ module.exports = [
       ctx.answer(res);
     },
   },
+  {
+    comment: '角色 - 获取指定角色下的的权限',
+    type: 'get',
+    path: 'own/perm',
+    param: Joi.object().keys({
+      roleId: Joi.number().required(),
+    }),
+    handle: async (ctx) => {
+      const res = await Service.permission.getRoleOwnPerm(ctx.reqData.roleId);
+      ctx.answer(res);
+    },
+  },
 ];
