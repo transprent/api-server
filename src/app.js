@@ -23,6 +23,10 @@ app.use(cors({
 
 app.use(Helmet()); //  provides important security headers to make app more secure by default
 
+app.use(Middleware.session(app));
+
+app.use(Middleware.permission());
+
 app.use(Middleware.httpLogger()); // http request log
 
 app.use(Bodyparser({
@@ -35,12 +39,10 @@ app.use(Middleware.errorHandler()); // global error handling
 
 app.use(Middleware.swaggerDoc({ path: '/swagger.json' })); // swagger doc
 
-app.use(Middleware.session(app));
-
 router.useRouter(app); // mount the routing
 
 if (Config.env === 'dev') {
-  Model.syncModel(true); // 数据库模型同步
+  Model.syncModel(false); // 数据库模型同步
 }
 
 app.listen(Config.server.port, () => {

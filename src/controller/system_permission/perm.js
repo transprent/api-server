@@ -15,11 +15,11 @@ module.exports = [
       code: Joi.string().required(),
       desc: Joi.string(),
       sort: Joi.number(),
-      parentId: Joi.number(),
+      parentId: Joi.number().required(),
     }),
     handle: async (ctx) => {
-      await Model.sys_perm.create(ctx.reqData);
-      ctx.ok();
+      const res = await Model.sys_perm.create(ctx.reqData);
+      ctx.ok(res);
     },
   },
   {
@@ -60,6 +60,10 @@ module.exports = [
         include: [{
           model: Model.sys_role,
           as: 'roles',
+        },
+        {
+          model: Model.sys_resc,
+          as: 'rescs',
         }],
       });
       data.push({
@@ -67,6 +71,7 @@ module.exports = [
         id: 0,
         name: '管理系统',
         code: 'f_perm',
+        sort: 0,
         roles: [],
       });
       ctx.ok(data);

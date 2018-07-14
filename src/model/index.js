@@ -17,17 +17,17 @@ exports.sys_fk_user_role = sequelize.import(Path.join(__dirname, './sys_fk_user_
 exports.sys_user.belongsToMany(exports.sys_role, { as: 'roles', through: exports.sys_fk_user_role, foreignKey: 'user_id', validation: 'CASCADE', constraints: false });
 exports.sys_role.belongsToMany(exports.sys_user, { as: 'users', through: exports.sys_fk_user_role, foreignKey: 'role_id', validation: 'CASCADE', constraints: false });
 // 角色权限多对多关联
-exports.sys_role.belongsToMany(exports.sys_perm, { as: 'perms', through: exports.sys_fk_role_perm, foreignKey: 'perm_id', validation: 'CASCADE', constraints: false });
-exports.sys_perm.belongsToMany(exports.sys_role, { as: 'roles', through: exports.sys_fk_role_perm, foreignKey: 'role_id', validation: 'CASCADE', constraints: false });
+exports.sys_role.belongsToMany(exports.sys_perm, { as: 'perms', through: exports.sys_fk_role_perm, foreignKey: 'role_id', validation: 'CASCADE', constraints: false });
+exports.sys_perm.belongsToMany(exports.sys_role, { as: 'roles', through: exports.sys_fk_role_perm, foreignKey: 'perm_id', validation: 'CASCADE', constraints: false });
 // 权限资源多对多关联
-exports.sys_perm.belongsToMany(exports.sys_resc, { as: 'rescs', through: exports.sys_fk_perm_resc, foreignKey: 'resc_id', validation: 'CASCADE', constraints: false });
-exports.sys_resc.belongsToMany(exports.sys_perm, { as: 'perms', through: exports.sys_fk_perm_resc, foreignKey: 'perm_id', validation: 'CASCADE', constraints: false });
+exports.sys_perm.belongsToMany(exports.sys_resc, { as: 'rescs', through: exports.sys_fk_perm_resc, foreignKey: 'perm_id', validation: 'CASCADE', constraints: false });
+exports.sys_resc.belongsToMany(exports.sys_perm, { as: 'perms', through: exports.sys_fk_perm_resc, foreignKey: 'resc_id', validation: 'CASCADE', constraints: false });
 
-exports.syncModel = (force) => {
+exports.syncModel = () => {
   return new Promise((resolve, reject) => {
     if (Config.env !== 'dev') { reject(new Error('禁止在非Dev环境执行syncModel操作')); return; }
     logger.info('当前环境：', Config.env, ' 进行sequelize 模型同步...');
-    sequelize.sync({ force }).then(() => {
+    sequelize.sync({ force: false }).then(() => {
       logger.info('sequelize 模型同步成功！');
       resolve();
     }).catch((error) => {

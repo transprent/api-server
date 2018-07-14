@@ -4,7 +4,9 @@
  *
  * @return {function} Koa middleware.
  */
+
 const session = require('koa-session');
+
 const stroe = {};
 
 module.exports = (app) => {
@@ -14,15 +16,19 @@ module.exports = (app) => {
     httpOnly: true,
     signed: true,
     store: {
+      // eslint-disable-next-line
       get: async (key, maxAge, { rolling }) => {
         return stroe[key];
       },
-      set: async(key, sess, maxAge, { rolling, changed }) => {
+      // eslint-disable-next-line
+      set: async (key, sess, maxAge, { rolling, changed }) => {
+        // eslint-disable-next-line
         return stroe[key] = sess;
       },
-      destroy: async(key) => {
+      destroy: async (key) => {
+        // eslint-disable-next-line
         return stroe[key] = null;
-      }
+      },
     },
   }, app);
 };
