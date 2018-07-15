@@ -36,13 +36,13 @@ module.exports = [
   },
   {
     comment: '角色-删除角色',
-    type: 'get',
+    type: 'post',
     path: 'delete',
     param: Joi.object().keys({
-      id: Joi.string().required(),
+      ids: Joi.array().items(Joi.number()).required(),
     }),
     handle: async (ctx) => {
-      await Model.sys_role.destroy({ where: { id: ctx.reqData.id } });
+      await Model.sys_role.destroy({ where: { id: ctx.reqData.ids } });
       ctx.ok();
     },
   },

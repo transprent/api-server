@@ -45,13 +45,13 @@ module.exports = [
   },
   {
     comment: '资源-删除资源',
-    type: 'get',
+    type: 'post',
     path: 'delete',
     param: Joi.object().keys({
-      id: Joi.number().required(),
+      ids: Joi.array().items(Joi.number()).required(),
     }),
     handle: async (ctx) => {
-      await Model.sys_resc.destroy({ where: { id: ctx.reqData.id } });
+      await Model.sys_resc.destroy({ where: { id: ctx.reqData.ids } });
       ctx.ok();
     },
   },

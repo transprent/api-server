@@ -44,13 +44,13 @@ module.exports = [
   },
   {
     comment: '用户-删除用户',
-    type: 'get',
+    type: 'post',
     path: 'delete',
     param: Joi.object().keys({
-      id: Joi.string().required(),
+      ids: Joi.array().items(Joi.number()).required(),
     }),
     handle: async (ctx) => {
-      await Model.sys_user.destroy({ where: { id: ctx.reqData.id } });
+      await Model.sys_user.destroy({ where: { id: ctx.reqData.ids } });
       ctx.ok();
     },
   },
@@ -97,6 +97,10 @@ module.exports = [
         return;
       }
       const user = await Model.sys_user.findOne({
+        include: [{
+          model: Model.sys_role,
+          as: 'roles',
+        }],
         where: {
           uname: ctx.reqData.uname,
           passwd: StringHelper.md5(ctx.reqData.passwd),
@@ -115,6 +119,7 @@ module.exports = [
         realName: user.realName,
         phone: user.phone,
         desc: user.desc,
+        roleList: user.roles,
         permList: userPerms.result,
         rescList: userRescs.result,
       };
@@ -143,6 +148,7 @@ module.exports = [
           phone: user.phone,
           desc: user.desc,
           permList: user.permList,
+          roleList: user.roleList,
         };
         ctx.ok(data);
       } else {

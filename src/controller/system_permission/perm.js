@@ -41,13 +41,13 @@ module.exports = [
   },
   {
     comment: '权限-删除权限',
-    type: 'get',
+    type: 'post',
     path: 'delete',
     param: Joi.object().keys({
-      id: Joi.number().required(),
+      ids: Joi.array().items(Joi.number()).required(),
     }),
     handle: async (ctx) => {
-      await Model.sys_perm.destroy({ where: { id: ctx.reqData.id } });
+      await Model.sys_perm.destroy({ where: { id: ctx.reqData.ids } });
       ctx.ok();
     },
   },
