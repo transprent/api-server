@@ -3,6 +3,7 @@ const ModuleUtil = require('../utils/moduleUtil');
 
 const config = {
   env: process.env.NODE_ENV === 'production' ? 'prod' : 'dev',
+  baseDir: process.argv[1],
 
   server: {
     host: '',
