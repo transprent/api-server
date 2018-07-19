@@ -27,13 +27,13 @@ function generateApi() {
   const controllers = ModuleUtils.getDirectoryModule(Path.join(__dirname, '../controller'));
 
   controllers.forEach((ctr) => {
-    ctr.exports.forEach((item) => {
+    ctr.exports.routers.forEach((item) => {
       const url = `/${[...ctr.properties, item.path].filter(i => i).join('/')}`;
       const method = item.type || 'get';
       const tags = ctr.properties[0];
 
       const obj = {
-        summary: item.comment,
+        summary: [ctr.exports.comment, item.comment].join('-'),
         tags: [tags],
         produces: ['application/json'],
         responses: { 200: { code: 200, message: '', result: '' } },

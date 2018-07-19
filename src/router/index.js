@@ -10,12 +10,18 @@ exports.useRouter = (app) => {
   const controllers = ModuleUtils.getDirectoryModule(Path.join(__dirname, '../controller'));
 
   controllers.forEach((ctr) => {
-    ctr.exports.forEach((item) => {
+    ctr.exports.routers.forEach((item) => {
       const url = `/${[...ctr.properties, item.path].filter(i => i).join('/')}`;
       const method = item.type || 'get';
-      router[method](url, Middleware.paramValidate(item.param), item.handle);
+      router[method](
+        url,
+        ...ctr.exports.middleware || [],
+        ...item.middleware || [],
+        Middleware.paramValidate(item.param),
+        item.handle,
+      );
 
-      logger.info('挂载路由', item.comment || '', method, url);
+      logger.info('挂载路由', ctr.exports.comment, item.comment || '', method, url);
     });
   });
 
