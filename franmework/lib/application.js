@@ -1,3 +1,5 @@
+import { EventEmitter } from 'events';
+
 const Path = require('path');
 const Koa = require('koa');
 const Helmet = require('koa-helmet');
@@ -5,46 +7,54 @@ const Bodyparser = require('koa-bodyparser');
 const koaStatic = require('koa-static');
 const cors = require('@koa/cors');
 
-const app = require('./extend')(new Koa()); // extend koa
+const extend = require('./extend');
 const Config = require('./config');
 const Middleware = require('./middleware');
-const Model = require('./model');
 
 const logger = require('./utils/log4js').getLogger('app.js');
 const router = require('./router');
 
-app.keys = ['mysoul:admin'];
+export default class Application extends EventEmitter {
+  constructor(options = {}) {
+    super();
+    this.baseDir = options.baseDir;
 
-app.use(koaStatic(Path.join(__dirname, 'public')));
+    this.app = extend(new Koa());
+  }
 
-app.use(cors({
-  credentials: true,
-}));
+  init() {
+    this.app.keys = ['mysoul:admin'];
 
-app.use(Helmet()); //  provides important security headers to make app more secure by default
+    this.app.use(koaStatic(Path.join(__dirname, 'public')));
 
-app.use(Middleware.session(app));
+    this.app.use(cors({
+      credentials: true,
+    }));
 
-app.use(Middleware.permission());
+    this.app.use(Helmet()); //  provides important security headers to make app more secure by default
 
-app.use(Middleware.httpLogger()); // http request log
+    this.app.use(Middleware.session(this.app));
 
-app.use(Bodyparser({
-  enableTypes: ['json', 'form'],
-  textLimit: '1mb',
-  jsonLimit: '1mb',
-}));
+    this.app.use(Middleware.httpLogger()); // http request log
 
-app.use(Middleware.errorHandler()); // global error handling
+    this.app.use(Bodyparser({
+      enableTypes: ['json', 'form'],
+      textLimit: '1mb',
+      jsonLimit: '1mb',
+    }));
 
-app.use(Middleware.swaggerDoc({ path: '/swagger.json' })); // swagger doc
+    this.app.use(Middleware.errorHandler()); // global error handling
 
-router.useRouter(app); // mount the routing
+    this.app.use(Middleware.swaggerDoc({ path: '/swagger.json' })); // swagger doc
 
-if (Config.env === 'dev') {
-  Model.syncModel(true); // 数据库模型同步
+    this.emit('beforeRouter', this);
+
+    router.useRouter(this.app); // mount the routing
+  }
+
+  start() {
+    this.app.listen(Config.server.port, () => {
+      logger.info('server start at', Config.server.port);
+    });
+  }
 }
-
-app.listen(Config.server.port, () => {
-  logger.info('server start at', Config.server.port);
-});
