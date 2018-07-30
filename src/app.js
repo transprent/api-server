@@ -25,6 +25,8 @@ app.use(Helmet()); //  provides important security headers to make app more secu
 
 app.use(Middleware.session(app));
 
+app.use(Middleware.swaggerDoc({ path: '/swagger.json' })); // swagger doc
+
 app.use(Middleware.permission());
 
 app.use(Middleware.httpLogger()); // http request log
@@ -36,8 +38,6 @@ app.use(Bodyparser({
 }));
 
 app.use(Middleware.errorHandler()); // global error handling
-
-app.use(Middleware.swaggerDoc({ path: '/swagger.json' })); // swagger doc
 
 router.useRouter(app); // mount the routing
 
