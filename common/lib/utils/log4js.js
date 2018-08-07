@@ -37,8 +37,15 @@ log4js.configure({
   },
 });
 
-// trace debug info warn error fatal
-
 exports.getLogger = (category) => {
-  return log4js.getLogger(category || 'default');
+  return log4js.getLogger(category);
 };
+
+const mt = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'];
+exports.logger = {
+  trace
+};
+
+exports.log = (level, appName, content) => {
+
+}
