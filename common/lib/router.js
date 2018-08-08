@@ -2,12 +2,13 @@ const Path = require('path');
 const Router = require('koa-router');
 const ModuleUtils = require('./utils/moduleUtil');
 const Middleware = require('./middleware');
-const logger = require('./utils/log4js').getLogger('router/index');
+const log4js = require('./utils/log4js');
 
-exports.useRouter = (app, baseDir) => {
+exports.useRouter = (app, config) => {
+  const logger = log4js.getLogger(config.appName, 'router');
   const router = new Router();
 
-  const controllers = ModuleUtils.getDirectoryModule(Path.join(baseDir, 'controller'));
+  const controllers = ModuleUtils.getDirectoryModule(Path.join(config.baseDir, 'controller'));
 
   const entry = controllers.findIndex(i => i.properties.includes('entry'));
   if (entry !== -1) {
@@ -24,7 +25,7 @@ exports.useRouter = (app, baseDir) => {
         url,
         ...ctr.exports.middleware || [],
         ...item.middleware || [],
-        Middleware.paramValidate(item.param),
+        Middleware.paramValidate(item.param, config),
         item.handle,
       );
 

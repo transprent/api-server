@@ -37,15 +37,12 @@ log4js.configure({
   },
 });
 
-exports.getLogger = (category) => {
-  return log4js.getLogger(category);
+exports.getLogger = (category, project) => {
+  const logger = log4js.getLogger(`[${category}]`);
+  logger.__log = logger.log;
+  logger.log = (...args )=> {
+    args.splice(1, 0, project);
+    logger.__log(...args);
+  };
+  return logger;
 };
-
-const mt = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'];
-exports.logger = {
-  trace
-};
-
-exports.log = (level, appName, content) => {
-
-}

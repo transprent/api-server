@@ -6,12 +6,12 @@ const log4js = require('../utils/log4js');
  *
  * @return {function} Koa middleware.
  */
-module.exports = () => {
+module.exports = (app, config) => {
   return async (ctx, next) => {
     try {
       await next();
     } catch (err) {
-      log4js.getLogger('error').error('统一错误处理：', err.message);
+      log4js.getLogger(config.appName, 'error').error('统一错误处理：', err.message);
       ctx.app.emit('error', err, ctx);
       ctx.internalServerError(err.message);
     }

@@ -1,5 +1,5 @@
 const Path = require('path');
-const { utils } = require('../../../../franmework');
+const { utils } = require('../../../../common');
 
 const config = {
   appName: '后台管理',

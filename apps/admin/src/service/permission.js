@@ -1,5 +1,4 @@
-const Model = require('../model');
-const sequelize = require('../utils/sequelize');
+const { sequelize, model: Model } = require('../../../../dao');
 
 /**
  * 用户分配角色

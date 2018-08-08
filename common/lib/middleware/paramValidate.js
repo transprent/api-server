@@ -7,7 +7,7 @@ const log4js = require('../utils/log4js');
  *
  * @return {function} Koa middleware.
  */
-module.exports = (schema) => {
+module.exports = (schema, config) => {
   const joiOptions = {
     allowUnknown: true, // 允许出现未声明的字段
     stripUnknown: true, // 移除未声明的字段
@@ -21,7 +21,7 @@ module.exports = (schema) => {
       await next();
     } else {
       ctx.badRequest(result.error.message, result.error.details);
-      log4js.getLogger('http').warn('统一请求参数验证处理：', result.error);
+      log4js.getLogger(config.appName, 'http').warn('统一请求参数验证处理：', result.error);
     }
   };
 };

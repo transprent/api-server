@@ -1,6 +1,7 @@
-const logger = require('../utils/log4js').getLogger('http');
+const log4js = require('../utils/log4js');
 
-module.exports = () => {
+module.exports = (app, config) => {
+  const logger = log4js.getLogger(config.appName, 'http');
   return async (ctx, next) => {
     const start = Date.now();
     await next();

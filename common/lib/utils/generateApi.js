@@ -3,11 +3,11 @@ const convert = require('joi-to-json-schema');
 const ModuleUtils = require('./moduleUtil');
 
 
-function generateApi({ baseDir }) {
+function generateApi({ baseDir, appName }) {
   const api = {
     swagger: '2.0',
     info: {
-      // title: 'Test API',
+      title: appName,
       // description: 'Test API',
       // version: '1.0.0',
     },
@@ -29,7 +29,7 @@ function generateApi({ baseDir }) {
     ctr.exports.routers.forEach((item) => {
       const url = `/${[...ctr.properties, item.path].filter(i => i).join('/')}`;
       const method = item.type || 'get';
-      const tags = ctr.properties[0];
+      const tags = ctr.exports.comment;
 
       const obj = {
         summary: [ctr.exports.comment, item.comment].join('-'),
@@ -68,7 +68,7 @@ function generateApi({ baseDir }) {
       if (!api.tags.find(i => i.name === tags)) {
         api.tags.push({
           name: tags,
-          description: tags,
+          description: '',
         });
       }
 

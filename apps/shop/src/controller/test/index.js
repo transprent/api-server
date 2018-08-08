@@ -2,6 +2,7 @@
  * 接口资源
  */
 const Joi = require('joi');
+const logger = require('../../utils/log4js').getLogger(__dirname);
 
 module.exports = {
   comment: '测试',
@@ -15,6 +16,8 @@ module.exports = {
         is: Joi.boolean(),
       }),
       handle: async (ctx) => {
+        logger.info('测试logger');
+        logger.log('error', 'aa');
         ctx.ok();
       },
     },

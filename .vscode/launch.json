@@ -7,7 +7,13 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "admin",
+      "program": "${workspaceFolder}/apps/admin/src/app.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "shop",
       "env": {
         "NODE_ENV": "development"
       },
