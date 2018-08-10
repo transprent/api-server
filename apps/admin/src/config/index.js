@@ -8,7 +8,7 @@ const config = {
 
   server: {
     host: '',
-    port: 3001,
+    port: 3000,
   },
 };
 
