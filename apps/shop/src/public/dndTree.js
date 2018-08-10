@@ -192,6 +192,7 @@ treeJSON = d3.json("flare.json", function(error, treeData) {
             // it's important that we suppress the mouseover event on the node being dragged. Otherwise it will absorb the mouseover event and the underlying node will not detect it d3.select(this).attr('pointer-events', 'none');
         })
         .on("drag", function(d) {
+            console.log('195');
             if (d == root) {
                 return;
             }
