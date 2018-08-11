@@ -40,7 +40,7 @@ log4js.configure({
 exports.getLogger = (category, project) => {
   const logger = log4js.getLogger(`[${category}]`);
   logger.__log = logger.log;
-  logger.log = (...args )=> {
+  logger.log = (...args) => {
     args.splice(1, 0, project);
     logger.__log(...args);
   };
