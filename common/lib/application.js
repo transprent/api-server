@@ -12,7 +12,7 @@ const router = require('./router');
 
 module.exports = class Application {
   constructor(config = {}) {
-    this.config = config
+    this.config = config;
 
     this.app = extend(new Koa());
     this.logger = log4js.getLogger(this.config.appName, 'app.js');
@@ -54,4 +54,4 @@ module.exports = class Application {
       this.logger.info('server start at', this.config.server.port);
     });
   }
-}
+};
