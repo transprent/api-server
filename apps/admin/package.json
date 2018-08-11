@@ -7,5 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "kun",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "joi": "^13.6.0",
+    "joi-to-json-schema": "^3.3.0",
+    "trek-captcha": "^0.4.0",
+    "uuid": "^3.3.2"
+  }
 }

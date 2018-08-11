@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize');
 const Config = require('./config');
 
-const  log4js = require('../../common/lib/utils/log4js');
+const log4js = require('../../common/lib/utils/log4js');
+
 const logger = log4js.getLogger('DAO', 'model/index');
 
 const sequelize = new Sequelize(Config.db.database, Config.db.username, Config.db.password, {
