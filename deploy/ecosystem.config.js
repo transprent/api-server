@@ -6,7 +6,7 @@ module.exports = {
   apps: [
     {
       name: 'admin-api-server',
-      script: '../apps/admin/src/app.js',
+      script: './apps/admin/src/app.js',
       env: {
         COMMON_VARIABLE: 'true',
       },
