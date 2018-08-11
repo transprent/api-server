@@ -5,8 +5,8 @@ module.exports = {
    */
   apps: [
     {
-      name: 'admin-server',
-      script: '../src/app.js',
+      name: 'admin-api-server',
+      script: '../apps/admin/src/app.js',
       env: {
         COMMON_VARIABLE: 'true',
       },
@@ -14,6 +14,16 @@ module.exports = {
         NODE_ENV: 'production',
       },
     },
+    // {
+    //   name: 'shop-api-server',
+    //   script: '../apps/shop/src/app.js',
+    //   env: {
+    //     COMMON_VARIABLE: 'true',
+    //   },
+    //   env_production: {
+    //     NODE_ENV: 'production',
+    //   },
+    // },
   ],
 
   /**
