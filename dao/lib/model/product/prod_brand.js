@@ -1,19 +1,18 @@
 module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.define(
-    'sys_perm',
+    'prod_brand',
     {
       id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, autoIncrement: true },
       name: { type: DataTypes.STRING, allowNull: false },
-      code: { type: DataTypes.STRING, allowNull: false },
-      desc: { type: DataTypes.STRING, allowNull: true },
+      picture: { type: DataTypes.STRING, allowNull: false },
+      desc: { type: DataTypes.TEXT, allowNull: true },
       sort: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
       usable: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
-      parentId: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0, field: 'parent_id', comment: '父级权限' },
     },
     {
       timestamps: false,
-      tableName: 'sys_perm',
-      comment: '权限表',
+      tableName: 'prod_brand',
+      comment: '商品品牌',
       indexes: [
         { unique: true, fields: ['id'] },
       ],
