@@ -31,6 +31,14 @@ exports.sys_resc.belongsToMany(exports.sys_perm, { as: 'perms', through: exports
  * 商品表
  * ---------------------------------------
  */
+exports.sys_perm = sequelize.import(Path.join(__dirname, './product/prod_brand')); // 品牌
+exports.sys_perm = sequelize.import(Path.join(__dirname, './product/prod_catalog')); // 目录
+exports.sys_perm = sequelize.import(Path.join(__dirname, './product/prod_label')); // 标签
+exports.sys_perm = sequelize.import(Path.join(__dirname, './product/prod_sku_spec')); // sku属性
+exports.sys_perm = sequelize.import(Path.join(__dirname, './product/prod_sku')); // SKU
+exports.sys_perm = sequelize.import(Path.join(__dirname, './product/prod_spec_value')); // 品牌
+exports.sys_perm = sequelize.import(Path.join(__dirname, './product/prod_brand')); // 品牌
+exports.sys_perm = sequelize.import(Path.join(__dirname, './product/prod_brand')); // 品牌
 
 exports.syncModel = (force) => {
   return new Promise((resolve, reject) => {
