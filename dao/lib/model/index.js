@@ -31,14 +31,26 @@ exports.sys_resc.belongsToMany(exports.sys_perm, { as: 'perms', through: exports
  * 商品表
  * ---------------------------------------
  */
-exports.sys_perm = sequelize.import(Path.join(__dirname, './product/prod_brand')); // 品牌
-exports.sys_perm = sequelize.import(Path.join(__dirname, './product/prod_catalog')); // 目录
-exports.sys_perm = sequelize.import(Path.join(__dirname, './product/prod_label')); // 标签
-exports.sys_perm = sequelize.import(Path.join(__dirname, './product/prod_sku_spec')); // sku属性
-exports.sys_perm = sequelize.import(Path.join(__dirname, './product/prod_sku')); // SKU
-exports.sys_perm = sequelize.import(Path.join(__dirname, './product/prod_spec_value')); // 品牌
-exports.sys_perm = sequelize.import(Path.join(__dirname, './product/prod_brand')); // 品牌
-exports.sys_perm = sequelize.import(Path.join(__dirname, './product/prod_brand')); // 品牌
+exports.prod_brand = sequelize.import(Path.join(__dirname, './product/prod_brand')); // 品牌
+exports.prod_catalog = sequelize.import(Path.join(__dirname, './product/prod_catalog')); // 目录
+exports.prod_label = sequelize.import(Path.join(__dirname, './product/prod_label')); // 标签
+exports.prod_sku_spec = sequelize.import(Path.join(__dirname, './product/prod_sku_spec')); // sku属性
+exports.prod_spec_value = sequelize.import(Path.join(__dirname, './product/prod_spec_value')); // 通用属性值
+exports.prod_spec = sequelize.import(Path.join(__dirname, './product/prod_spec')); // 通用属性
+exports.prod_spu = sequelize.import(Path.join(__dirname, './product/prod_spu')); // SPU
+exports.prod_sku = sequelize.import(Path.join(__dirname, './product/prod_sku')); // SKU
+exports.prod_fk_spu_label = sequelize.import(Path.join(__dirname, './product/prod_fk_spu_label')); // SPU和标签关联表
+// SPU与SKU一对多关联
+exports.prod_spu.hasMany(exports.prod_sku, { as: 'sku', foreignKey: 'spu_id', validation: 'CASCADE', constraints: false });
+// SPU与标签多对多关联
+exports.prod_spu.belongsToMany(exports.prod_label, { as: 'rescs', through: exports.prod_fk_spu_label, foreignKey: 'spu_id', validation: 'CASCADE', constraints: false });
+exports.prod_label.belongsToMany(exports.prod_spu, { as: 'perms', through: exports.prod_fk_spu_label, foreignKey: 'label_id', validation: 'CASCADE', constraints: false });
+// SPU与品牌一对一关联
+exports.prod_spu.belongsTo(exports.prod_brand, { as: 'spuBrand', foreignKey: 'brand_id', validation: 'CASCADE', constraints: false });
+// SPU与目录一对一关联
+exports.prod_spu.belongsTo(exports.prod_catalog, { as: 'spuCatalog', foreignKey: 'catalog_id', validation: 'CASCADE', constraints: false });
+// SKU与属性一对多关联
+exports.prod_sku.hasMany(exports.prod_sku_spec, { as: 'skuSpec', foreignKey: 'sku_id', validation: 'CASCADE', constraints: false });
 
 exports.syncModel = (force) => {
   return new Promise((resolve, reject) => {
@@ -53,3 +65,5 @@ exports.syncModel = (force) => {
     });
   });
 };
+
+exports.syncModel(true);
