@@ -43,12 +43,13 @@ exports.prod_fk_spu_label = sequelize.import(Path.join(__dirname, './product/pro
 // SPU与SKU一对多关联
 exports.prod_spu.hasMany(exports.prod_sku, { as: 'sku', foreignKey: 'spu_id', validation: 'CASCADE', constraints: false });
 // SPU与标签多对多关联
-exports.prod_spu.belongsToMany(exports.prod_label, { as: 'rescs', through: exports.prod_fk_spu_label, foreignKey: 'spu_id', validation: 'CASCADE', constraints: false });
-exports.prod_label.belongsToMany(exports.prod_spu, { as: 'perms', through: exports.prod_fk_spu_label, foreignKey: 'label_id', validation: 'CASCADE', constraints: false });
+exports.prod_spu.belongsToMany(exports.prod_label, { as: 'label', through: exports.prod_fk_spu_label, foreignKey: 'spu_id', validation: 'CASCADE', constraints: false });
+exports.prod_label.belongsToMany(exports.prod_spu, { as: 'spu', through: exports.prod_fk_spu_label, foreignKey: 'label_id', validation: 'CASCADE', constraints: false });
+// SPU与目录多对多关联
+exports.prod_spu.belongsToMany(exports.prod_catalog, { as: 'catalog', through: exports.prod_fk_spu_catalog, foreignKey: 'spu_id', validation: 'CASCADE', constraints: false });
+exports.prod_catalog.belongsToMany(exports.prod_spu, { as: 'spu', through: exports.prod_fk_spu_catalog, foreignKey: 'catalog_id', validation: 'CASCADE', constraints: false });
 // SPU与品牌一对一关联
 exports.prod_spu.belongsTo(exports.prod_brand, { as: 'spuBrand', foreignKey: 'brand_id', validation: 'CASCADE', constraints: false });
-// SPU与目录一对一关联
-exports.prod_spu.belongsTo(exports.prod_catalog, { as: 'spuCatalog', foreignKey: 'catalog_id', validation: 'CASCADE', constraints: false });
 // SKU与属性一对多关联
 exports.prod_sku.hasMany(exports.prod_sku_spec, { as: 'skuSpec', foreignKey: 'sku_id', validation: 'CASCADE', constraints: false });
 

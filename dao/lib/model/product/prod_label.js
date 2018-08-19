@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
       id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, autoIncrement: true },
       text: { type: DataTypes.STRING, allowNull: false },
       color: { type: DataTypes.STRING, allowNull: false },
-      backfround: { type: DataTypes.STRING, allowNull: true },
+      background: { type: DataTypes.STRING, allowNull: true },
+      usable: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
     },
     {
       timestamps: false,
