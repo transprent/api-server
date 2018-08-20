@@ -34,11 +34,10 @@ exports.sys_resc.belongsToMany(exports.sys_perm, { as: 'perms', through: exports
 exports.prod_brand = sequelize.import(Path.join(__dirname, './product/prod_brand')); // 品牌
 exports.prod_catalog = sequelize.import(Path.join(__dirname, './product/prod_catalog')); // 目录
 exports.prod_label = sequelize.import(Path.join(__dirname, './product/prod_label')); // 标签
-exports.prod_sku_spec = sequelize.import(Path.join(__dirname, './product/prod_sku_spec')); // sku属性
-exports.prod_spec_value = sequelize.import(Path.join(__dirname, './product/prod_spec_value')); // 通用属性值
 exports.prod_spec = sequelize.import(Path.join(__dirname, './product/prod_spec')); // 通用属性
 exports.prod_spu = sequelize.import(Path.join(__dirname, './product/prod_spu')); // SPU
 exports.prod_sku = sequelize.import(Path.join(__dirname, './product/prod_sku')); // SKU
+exports.prod_sku_spec = sequelize.import(Path.join(__dirname, './product/prod_sku_spec')); // sku属性
 exports.prod_fk_spu_label = sequelize.import(Path.join(__dirname, './product/prod_fk_spu_label')); // SPU和标签关联表
 // SPU与SKU一对多关联
 exports.prod_spu.hasMany(exports.prod_sku, { as: 'sku', foreignKey: 'spu_id', validation: 'CASCADE', constraints: false });
