@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       detail: { type: DataTypes.TEXT, allowNull: true, comment: '详情' },
       price: { type: DataTypes.DOUBLE, allowNull: false, comment: '价格' },
       picture: { type: DataTypes.STRING, allowNull: false, comment: '主图' },
-      brandId: { type: DataTypes.INTEGER, allowNull: true, field: 'brand_id', comment: '品牌' },
+      photos: { type: DataTypes.STRING, allowNull: false, comment: '商品图片' },
       catalogId: { type: DataTypes.INTEGER, allowNull: false, field: 'catalog_id', comment: '目录' },
       sort: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
       status: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0, comment: '下架：0，上架：1' },
