@@ -6,6 +6,7 @@ const Joi = require('joi');
 
 module.exports = {
   comment: '品牌',
+  roles: ['admin'],
   routers: [
     {
       comment: '获取品牌数据',
