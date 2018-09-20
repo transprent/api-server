@@ -7,6 +7,12 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "file",
+      "program": "${workspaceFolder}/apps/file/src/app.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "admin",
       "program": "${workspaceFolder}/apps/admin/src/app.js"
     },
