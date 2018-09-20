@@ -23,6 +23,7 @@ exports.useRouter = (app, config) => {
       const method = item.type || 'get';
       router[method](
         url,
+        Middleware.permission(ctr.exports.roles, item.roles),
         ...ctr.exports.middleware || [],
         ...item.middleware || [],
         Middleware.paramValidate(item.param, config),

@@ -4,7 +4,7 @@ const { utils } = require('../../../common');
 const config = {
   env: process.env.NODE_ENV === 'production' ? 'prod' : 'dev',
   db: {
-    host: 'www.renkun.vip',
+    host: '193.112.47.114',
     port: 3306,
     database: 'soul',
     username: 'root',

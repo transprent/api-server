@@ -14,6 +14,7 @@ module.exports = {
       path: 'add',
       param: Joi.object().keys({
         name: Joi.string().required(),
+        code: Joi.string().required(),
         desc: Joi.string(),
       }),
       handle: async (ctx) => {
@@ -28,6 +29,7 @@ module.exports = {
       param: Joi.object().keys({
         id: Joi.string().required(),
         name: Joi.string().required(),
+        code: Joi.string().required(),
         usable: Joi.boolean().required(),
         desc: Joi.string(),
       }),
@@ -60,31 +62,6 @@ module.exports = {
           }],
         });
         ctx.ok(data);
-      },
-    },
-    {
-      comment: '分配权限',
-      type: 'post',
-      path: 'allocation_perm',
-      param: Joi.object().keys({
-        roleId: Joi.number().required(),
-        permIds: Joi.array().items(Joi.number()).required(),
-      }),
-      handle: async (ctx) => {
-        const res = await Service.permission.allocationPerm(ctx.reqData);
-        ctx.answer(res);
-      },
-    },
-    {
-      comment: '获取指定角色下的的权限',
-      type: 'get',
-      path: 'own/perm',
-      param: Joi.object().keys({
-        roleId: Joi.number().required(),
-      }),
-      handle: async (ctx) => {
-        const res = await Service.permission.getRoleOwnPerm(ctx.reqData.roleId);
-        ctx.answer(res);
       },
     },
   ],  

@@ -10,22 +10,12 @@ exports.Test = sequelize.import(Path.join(__dirname, './test'));
  * 系统权限管理表
  * ------------------------------------
  */
-exports.sys_perm = sequelize.import(Path.join(__dirname, './system_access/sys_perm')); // 权限表
-exports.sys_resc = sequelize.import(Path.join(__dirname, './system_access/sys_resc')); // 资源表
 exports.sys_role = sequelize.import(Path.join(__dirname, './system_access/sys_role')); // 角色表
 exports.sys_user = sequelize.import(Path.join(__dirname, './system_access/sys_user')); // 用户表
-exports.sys_fk_perm_resc = sequelize.import(Path.join(__dirname, './system_access/sys_fk_perm_resc')); // 权限资源关联表
-exports.sys_fk_role_perm = sequelize.import(Path.join(__dirname, './system_access/sys_fk_role_perm')); // 角色权限关联表
 exports.sys_fk_user_role = sequelize.import(Path.join(__dirname, './system_access/sys_fk_user_role')); // 用户角色关联表
 // 用户角色多对多关联
 exports.sys_user.belongsToMany(exports.sys_role, { as: 'roles', through: exports.sys_fk_user_role, foreignKey: 'user_id', validation: 'CASCADE', constraints: false });
 exports.sys_role.belongsToMany(exports.sys_user, { as: 'users', through: exports.sys_fk_user_role, foreignKey: 'role_id', validation: 'CASCADE', constraints: false });
-// 角色权限多对多关联
-exports.sys_role.belongsToMany(exports.sys_perm, { as: 'perms', through: exports.sys_fk_role_perm, foreignKey: 'role_id', validation: 'CASCADE', constraints: false });
-exports.sys_perm.belongsToMany(exports.sys_role, { as: 'roles', through: exports.sys_fk_role_perm, foreignKey: 'perm_id', validation: 'CASCADE', constraints: false });
-// 权限资源多对多关联
-exports.sys_perm.belongsToMany(exports.sys_resc, { as: 'rescs', through: exports.sys_fk_perm_resc, foreignKey: 'perm_id', validation: 'CASCADE', constraints: false });
-exports.sys_resc.belongsToMany(exports.sys_perm, { as: 'perms', through: exports.sys_fk_perm_resc, foreignKey: 'resc_id', validation: 'CASCADE', constraints: false });
 
 /**
  * 商品表
@@ -40,6 +30,7 @@ exports.prod_sku = sequelize.import(Path.join(__dirname, './product/prod_sku'));
 exports.prod_sku_spec = sequelize.import(Path.join(__dirname, './product/prod_sku_spec')); // sku规格
 exports.prod_spu_attr = sequelize.import(Path.join(__dirname, './product/prod_spu_attr')); // spu属性
 exports.prod_fk_spu_label = sequelize.import(Path.join(__dirname, './product/prod_fk_spu_label')); // SPU和标签关联表
+exports.prod_fk_spu_catalog = sequelize.import(Path.join(__dirname, './product/prod_fk_spu_catalog')); // SPU和目录关联表
 // SPU与SKU一对多关联
 exports.prod_spu.hasMany(exports.prod_sku, { as: 'sku', foreignKey: 'spu_id', validation: 'CASCADE', constraints: false });
 // SPU与标签多对多关联
@@ -68,4 +59,4 @@ exports.syncModel = (force) => {
   });
 };
 
-exports.syncModel(true);
+exports.syncModel();

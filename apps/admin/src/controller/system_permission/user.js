@@ -113,17 +113,12 @@ module.exports = {
           return;
         }
   
-        const userPerms = await Service.permission.getUserPerms(user.id);
-        const userRescs = await Service.permission.getUserRescs(user.id);
-  
         ctx.session.user = {
           uname: user.uname,
           realName: user.realName,
           phone: user.phone,
           desc: user.desc,
-          roleList: user.roles,
-          permList: userPerms.result,
-          rescList: userRescs.result,
+          roleList: user.roles.map(i => i.code),
         };
         ctx.ok();
       },
@@ -149,7 +144,6 @@ module.exports = {
             realName: user.realName,
             phone: user.phone,
             desc: user.desc,
-            permList: user.permList,
             roleList: user.roleList,
           };
           ctx.ok(data);
