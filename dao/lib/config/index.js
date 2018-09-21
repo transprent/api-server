@@ -4,11 +4,11 @@ const { utils } = require('../../../common');
 const config = {
   env: process.env.NODE_ENV === 'production' ? 'prod' : 'dev',
   db: {
-    host: '193.112.47.114',
+    host: 'http://localhost',
     port: 3306,
     database: 'soul',
     username: 'root',
-    password: '123456',
+    password: 'zxcvbnm8',
   },
 };
 
