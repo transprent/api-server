@@ -29,10 +29,10 @@ function generateApi({ baseDir, appName }) {
     ctr.exports.routers.forEach((item) => {
       const url = `/${[...ctr.properties, item.path].filter(i => i).join('/')}`;
       const method = item.type || 'get';
-      const tags = `${ctr.exports.comment} - ${ctr.exports.roles || '无权限'}`;
+      const tags = `${ctr.exports.comment} - ${ctr.exports.roles || '开放'}`;
 
       const obj = {
-        summary: `${item.comment} - ${item.roles || '无权限'}`,
+        summary: `${item.comment} - ${item.roles || '开放'}`,
         tags: [tags],
         produces: ['application/json'],
         responses: { 200: { code: 200, message: '', result: '' } },
