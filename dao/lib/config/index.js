@@ -4,7 +4,7 @@ const { utils } = require('../../../common');
 const config = {
   env: process.env.NODE_ENV === 'production' ? 'prod' : 'dev',
   db: {
-    host: 'http://localhost',
+    host: 'localhost',
     port: 3306,
     database: 'soul',
     username: 'root',
